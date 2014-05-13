@@ -13,10 +13,12 @@ l.locale(l)
 local nilvalue        = l.P"-"
 local printusascii    = l.R"!~"
 
-local unix_date = l.digit^1
-local hostname = nilvalue + printusascii^-255
+local unix_date = l.Cg( l.digit^1 , "Timestamp" )
+local hostname = l.Cg( nilvalue + printusascii^-255 , "Hostname" )
 
-grammar = "[" * l.C( unix_date ) * "] SERVICE ALERT: " * l.C( hostname )
+grammar = l.Ct( "[" * unix_date * "] SERVICE ALERT: " * hostname )
+
+http://lpeg.trink.com/share/15604474904014491569
 
 --]]
 
